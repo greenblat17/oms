@@ -12,7 +12,9 @@
 
 - Golang
 - PostgreSQL
-- pgx, squirrel, goose
+- Apache Kafka
+- Prometheus
+- Jaeger
 - Docker
 
 
