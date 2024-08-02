@@ -5,3 +5,4 @@ pgdata
 bin/
 vendor.proto/
 .env
+.DS_Store
