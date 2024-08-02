@@ -1,0 +1,479 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "order/v1/order.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Order"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/orders/accept-order": {
+      "post": {
+        "summary": "Accepts an order from a courier",
+        "description": "Endpoint to accept an order from a courier",
+        "operationId": "Order_AcceptOrderFromCourier",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderAcceptOrderResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for accepting an order from a courier",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderAcceptOrderRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/api/v1/orders/accept-return": {
+      "post": {
+        "summary": "Accepts a return from a client",
+        "description": "Endpoint to accept a return from a client",
+        "operationId": "Order_AcceptReturnFromClient",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderAcceptReturnResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for accepting a return from a client",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderAcceptReturnRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/api/v1/orders/issue-order": {
+      "post": {
+        "summary": "Issues an order to a client",
+        "description": "Endpoint to issue an order to a client",
+        "operationId": "Order_IssueOrderToClient",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderIssueOrderResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for issuing an order to a client",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderIssueOrderRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/api/v1/orders/list-orders": {
+      "post": {
+        "summary": "Lists orders for a recipient",
+        "description": "Endpoint to list orders for a recipient",
+        "operationId": "Order_ListOrders",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderListOrdersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing orders for a recipient",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderListOrdersRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/api/v1/orders/return-list": {
+      "post": {
+        "summary": "Lists returns for a recipient",
+        "description": "Endpoint to list returns for a recipient",
+        "operationId": "Order_ReturnList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderReturnListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing returns",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderReturnListRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    },
+    "/api/v1/orders/return-order": {
+      "post": {
+        "summary": "Returns an order to a courier",
+        "description": "Endpoint to return an order to a courier",
+        "operationId": "Order_ReturnOrderToCourier",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/orderReturnOrderResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for returning an order to a courier",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderReturnOrderRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Order"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "orderAcceptOrderRequest": {
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "recipientId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "storageUntil": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "packageType": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "number",
+          "format": "double"
+        },
+        "cost": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "description": "Request message for accepting an order from a courier",
+      "title": "AcceptOrderRequest",
+      "required": [
+        "orderId",
+        "recipientId",
+        "storageUntil"
+      ]
+    },
+    "orderAcceptOrderResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "orderId": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "orderAcceptReturnRequest": {
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "recipientId": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "description": "Request message for accepting a return from a client",
+      "title": "AcceptReturnRequest",
+      "required": [
+        "orderID",
+        "recipientID"
+      ]
+    },
+    "orderAcceptReturnResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "orderId": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "orderIssueOrderRequest": {
+      "type": "object",
+      "properties": {
+        "orderIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      },
+      "description": "Request message for issuing an order to a client",
+      "title": "IssueOrderRequest",
+      "required": [
+        "orderIDs"
+      ]
+    },
+    "orderIssueOrderResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "orderId": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "orderListOrdersRequest": {
+      "type": "object",
+      "properties": {
+        "recipientId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "description": "Request message for listing orders for a recipient",
+      "title": "ListOrdersRequest",
+      "required": [
+        "recipientID"
+      ]
+    },
+    "orderListOrdersResponse": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/orderOrderEntity"
+          }
+        }
+      },
+      "description": "Response message for listing orders",
+      "title": "ListOrdersResponse",
+      "required": [
+        "orders"
+      ]
+    },
+    "orderOrderEntity": {
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "recipientId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "storageUntil": {
+          "type": "string"
+        }
+      }
+    },
+    "orderReturnListRequest": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "description": "Request message for listing returns",
+      "title": "ReturnListRequest",
+      "required": [
+        "page"
+      ]
+    },
+    "orderReturnListResponse": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/orderOrderEntity"
+          }
+        }
+      },
+      "description": "Response message for listing returns",
+      "title": "ReturnListResponse",
+      "required": [
+        "orders"
+      ]
+    },
+    "orderReturnOrderRequest": {
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "description": "Request message for returning an order to a courier",
+      "title": "ReturnOrderRequest",
+      "required": [
+        "orderID"
+      ]
+    },
+    "orderReturnOrderResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "orderId": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

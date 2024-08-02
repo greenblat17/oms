@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+  postgres:
+    extends:
+      file: ./docker-compose-postgres.yaml
+      service: postgres
+  zookeeper:
+    extends:
+      file: ./docker-compose-zookeeper.yaml
+      service: zookeeper
+  kafka:
+    extends:
+      file: ./docker-compose-kafka.yaml
+      service: kafka
+  swagger:
+    extends:
+      file: ./docker-compose-swagger.yaml
+      service: swagger-ui
+  prometheus:
+    extends:
+      file: ./docker-compose-prometheus.yaml
+      service: prometheus
+  jaeger:
+    extends:
+      file: ./docker-compose-jaeger.yaml
+      service: jaeger
+
+networks:
+  net:
+    driver: bridge

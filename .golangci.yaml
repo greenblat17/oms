@@ -1,0 +1,120 @@
+linters-settings:
+  govet:
+    fieldalignment: true
+  gocyclo:
+    # Minimal code complexity to report.
+    # Default: 30 (but we recommend 10-20) *Author note
+    min-complexity: 15
+  dupl:
+    threshold: 100
+  goconst:
+    min-len: 2
+    min-occurrences: 2
+  misspell:
+    locale: US
+  lll:
+    line-length: 140
+  goimports:
+    # repository specific option, set your project instead
+    local-prefixes: 
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - performance
+      - style
+    disabled-checks:
+      - wrapperFunc
+  funlen:
+    lines: 100
+    ignore-comments: true
+  gocognit:
+    min-complexity: 10
+  nlreturn:
+    # Size of the block (including return statement that is still "OK")
+    # so no return split required.
+    # Default: 1
+    block-size: 2
+  rowserrcheck:
+    # database/sql is always checked
+    packages:
+      - github.com/jackc/pgx/v5
+
+linters:
+  disable:
+    # Go linter that checks if package imports are in a list of acceptable packages.
+    # Probably you don`t need it.
+    - depguard
+    # Check if comments end in a period.
+    - godot
+    # gofumpt: consider enable it and use gofumpt in project.
+    - gofumpt
+    # IMPORTANT: we don't recommend using this linter before doing performance profiling.
+    # For most programs usage of prealloc will be a premature optimization.
+    - prealloc
+    # Probably you don`t need to use it as long as you don`t want to make your service international
+    - gosmopolitan
+  enable:
+    - gochecknoinits
+    - gochecknoglobals
+    - wastedassign
+    - usestdlibvars
+    - tagalign
+    - nosprintfhostport
+    - nilnil
+    - nilerr
+    - mirror
+    - maintidx
+    - gomnd
+    - errname
+    - decorder
+    - errchkjson
+    - cyclop
+    - copyloopvar
+    - bidichk
+    - funlen
+    - rowserrcheck
+    - asciicheck
+    - bodyclose
+    - dogsled
+    - dupl
+    - errcheck
+    - exhaustive
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - gofmt
+    - goimports
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - lll
+    - misspell
+    - nakedret
+    - nestif
+    - nlreturn
+    - noctx
+    - nolintlint
+    - revive
+    - sqlclosecheck
+    - staticcheck
+    - stylecheck
+    - testpackage
+    - unconvert
+    - unparam
+    - unused
+    - whitespace
+    - wsl
+
+run:
+  timeout: 3m
+  tests: false
+  skip-dirs:
+    - api
+    - docs
+    - migrations
+    - helm
+    - configs
+    - tests

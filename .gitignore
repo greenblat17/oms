@@ -1,0 +1,7 @@
+orders.json
+.idea/
+.vscode/
+pgdata
+bin/
+vendor.proto/
+.env

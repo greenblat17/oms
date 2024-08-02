@@ -1,0 +1,214 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "gitlab.ozon.dev/a_zhuravlev_9785/homework/pkg/grpc/order;order";
+
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+service Order {
+  rpc AcceptOrderFromCourier(AcceptOrderRequest) returns (AcceptOrderResponse) {
+    option(google.api.http) = {
+      post: "/api/v1/orders/accept-order"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Accepts an order from a courier",
+      description: "Endpoint to accept an order from a courier"
+    };
+  };
+
+  rpc ReturnOrderToCourier(ReturnOrderRequest) returns (ReturnOrderResponse) {
+    option(google.api.http) = {
+      post: "/api/v1/orders/return-order"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Returns an order to a courier",
+      description: "Endpoint to return an order to a courier"
+    };
+  };
+
+  rpc IssueOrderToClient(IssueOrderRequest) returns (IssueOrderResponse) {
+    option(google.api.http) = {
+      post: "/api/v1/orders/issue-order"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Issues an order to a client",
+      description: "Endpoint to issue an order to a client"
+    };
+  };
+
+  rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
+    option(google.api.http) = {
+      post: "/api/v1/orders/list-orders"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Lists orders for a recipient",
+      description: "Endpoint to list orders for a recipient"
+    };
+  };
+
+  rpc AcceptReturnFromClient(AcceptReturnRequest) returns (AcceptReturnResponse) {
+    option(google.api.http) = {
+      post: "/api/v1/orders/accept-return"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Accepts a return from a client",
+      description: "Endpoint to accept a return from a client"
+    };
+  };
+
+  rpc ReturnList(ReturnListRequest) returns (ReturnListResponse) {
+    option(google.api.http) = {
+      post: "/api/v1/orders/return-list"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Lists returns for a recipient",
+      description: "Endpoint to list returns for a recipient"
+    };
+  };
+}
+
+message OrderEntity {
+  int64 order_id = 1;
+  int64 recipient_id = 2;
+  string storage_until = 3;
+}
+
+message AcceptOrderRequest {
+  int64 order_id = 1 [(validate.rules).int64.gt = 0];
+  int64 recipient_id = 2 [(validate.rules).int64.gt = 0];
+  google.protobuf.Timestamp storage_until = 3 [
+    (validate.rules).timestamp.required = true,
+    (validate.rules).timestamp.gt_now = true
+  ];
+  optional string package_type = 6 [(validate.rules).string = {ignore_empty: true, pattern: "^[a-zA-Z0-9_-]*$"}];
+  double weight = 7;
+  double cost = 8;
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "AcceptOrderRequest",
+      description: "Request message for accepting an order from a courier",
+      required: ["order_id", "recipient_id", "storage_until"]
+    }
+  };
+}
+
+message AcceptOrderResponse {
+  string message = 1;
+  int64 order_id = 2;
+}
+
+message ReturnOrderRequest {
+  int64 order_id = 1 [(validate.rules).int64.gt = 0];
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "ReturnOrderRequest",
+      description: "Request message for returning an order to a courier",
+      required: ["orderID"]
+    }
+  };
+}
+
+message ReturnOrderResponse {
+  string message = 1;
+  int64 order_id = 2;
+}
+
+message IssueOrderRequest {
+  repeated int64 order_ids = 1 [
+    (validate.rules).repeated.min_items = 1,
+    (validate.rules).repeated.unique = true
+  ];
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "IssueOrderRequest",
+      description: "Request message for issuing an order to a client",
+      required: ["orderIDs"]
+    }
+  };
+}
+
+message IssueOrderResponse {
+  string message = 1;
+  int64 order_id = 2;
+}
+
+message ListOrdersRequest {
+  int64 recipient_id = 1 [(validate.rules).int64.gt = 0];
+  optional int32 limit = 2;
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "ListOrdersRequest",
+      description: "Request message for listing orders for a recipient",
+      required: ["recipientID"]
+    }
+  };
+}
+
+message ListOrdersResponse {
+  repeated OrderEntity orders = 1;
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "ListOrdersResponse",
+      description: "Response message for listing orders",
+      required: ["orders"]
+    }
+  };
+}
+
+message AcceptReturnRequest {
+  int64 order_id = 1 [(validate.rules).int64.gt = 0];
+  int64 recipient_id = 2 [(validate.rules).int64.gt = 0];
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "AcceptReturnRequest",
+      description: "Request message for accepting a return from a client",
+      required: ["orderID", "recipientID"]
+    }
+  };
+}
+
+message AcceptReturnResponse {
+  string message = 1;
+  int64 order_id = 2;
+}
+
+message ReturnListRequest {
+  int32 page = 1 [(validate.rules).int32.gt = 0];
+  optional int32 limit = 2;
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "ReturnListRequest",
+      description: "Request message for listing returns",
+      required: ["page"]
+    }
+  };
+}
+
+message ReturnListResponse {
+  repeated OrderEntity orders = 1;
+
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "ReturnListResponse",
+      description: "Response message for listing returns",
+      required: ["orders"]
+    }
+  };
+}

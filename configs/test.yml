@@ -1,0 +1,6 @@
+db:
+  username: "test"
+  host: "localhost"
+  port: "5433"
+  db_name: "test"
+  ssl_mode: "disable"

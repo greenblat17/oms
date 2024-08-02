@@ -1,0 +1,24 @@
+name: "oms"
+
+db:
+  username: "postgres"
+  host: "localhost"
+  port: "5432"
+  db_name: "oms"
+  ssl_mode: "disable"
+
+kafka:
+  brokers:
+    - "127.0.0.1:9092"
+  topic: "commands"
+
+cache:
+  type: "LRU"
+  ttl: 5m
+  capacity: 100
+
+output_source: "cli"
+
+grpc_port: 50051
+http_port: 8081
+prometheus_port: 9091

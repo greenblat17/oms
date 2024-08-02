@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8082:8080"
+    volumes:
+      - ../pkg/api/proto/order/v1/order/v1/order.swagger.json:/swagger/order.swagger.json
+    environment:
+      - SWAGGER_JSON=/swagger/order.swagger.json

@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  postgres:
+    image: postgres:15.1
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: ${TEST_DB_PASSWORD}
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    container_name: 'postgres-container-test'
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test -d test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped

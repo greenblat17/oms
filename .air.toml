@@ -1,0 +1,30 @@
+# Config file for Air.
+# https://github.com/cosmtrek/air
+
+[build]
+# Project base directory
+src_dir = "."
+# Working directory
+bin_dir = "bin"
+# Name of binary file
+bin = "cmd/pvz_manager/main.go"
+# Build cmd
+cmd = "go build -o ./bin/cmd/pvz_manager ."
+# Patterns to exclude in build
+exclude_dir = ["assets", "bin", "scripts"]
+# Patterns to include in build
+include_ext = ["go", "tpl", "tmpl", "html"]
+# Patterns to exclude in build
+exclude_ext = ["swp", "tmp"]
+# Follow symlinks
+follow_symlinks = true
+# Build delay(ms)
+delay = 1000
+
+[log]
+# Show log timestamp
+time = true
+
+[color]
+# Customize the color of log.
+title = "magenta"
